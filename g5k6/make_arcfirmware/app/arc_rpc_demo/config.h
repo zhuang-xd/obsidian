@@ -1,0 +1,83 @@
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
+
+#define JPEG_CHN_OFFSET 3
+#define MAX_VPU_CHN_NUM 3
+#define MAX_GRP_NUM 3
+/*Automatically generated make config: don't edit */
+/*Linux Kernel Configuration */
+/*Fri Nov 21 15:14:42 2025 */
+
+#define FH_APP_GRP_ID 0
+/*FH_USING_PS5270_MIPI is not set */
+/*FH_USING_OVOS02K_MIPI is not set */
+/*FH_USING_SC3336_MIPI is not set */
+/*FH_USING_OVOS04C10_MIPI is not set */
+#define FH_USING_OV04C10_MIPI
+/*FH_USING_OVOS08_MIPI is not set */
+/*FH_USING_GC2083_MIPI is not set */
+/*CONFIG_SENSOR_SLAVE_MODE is not set */
+/*ENABLE_NNA_DET is not set */
+/*ENABLE_MD_DET is not set */
+#define ENABLE_AUDIO
+/*ENABLE_STARTUP_OSD is not set */
+#define ENBALE_SMALL_TO_BIG
+#define SMALL_ISP_WIGHT 480
+#define SMALL_ISP_HEIGHT 320
+/*FH_APP_USING_FORMAT_192X192P220_G9 is not set */
+/*FH_APP_USING_FORMAT_384X384P110_G9 is not set */
+#define FH_APP_USING_FORMAT_320P240_G9
+#define ISP_FORMAT_G9 FORMAT_320P240
+#define VI_INPUT_WIDTH_G9 480
+#define VI_INPUT_HEIGHT_G9 320
+#define FRAMES_TO_CHANGE_SIZE 30
+#define VIDEO_GRP0
+
+/*ISP Config */
+
+#define ISP_WIDTH_G0 1920
+#define ISP_HEIGHT_G0 1088
+/*FH_APP_USING_FORMAT_1080P12_SLAVE_G0 is not set */
+/*FH_APP_USING_FORMAT_1080P30_G0 is not set */
+/*FH_APP_USING_FORMAT_1080P60_G0 is not set */
+/*FH_APP_USING_FORMAT_2304X1296P15_G0 is not set */
+/*FH_APP_USING_FORMAT_2304X1296P30_SLAVE_G0 is not set */
+/*FH_APP_USING_FORMAT_1536X1536P30_G0 is not set */
+/*FH_APP_USING_FORMAT_2688X1520P25_G0 is not set */
+/*FH_APP_USING_FORMAT_2688X1520P30_G0 is not set */
+/*FH_APP_USING_FORMAT_400WP30_G0 is not set */
+/*FH_APP_USING_FORMAT_400WP25_G0 is not set */
+/*FH_APP_USING_FORMAT_1080P20_G0 is not set */
+#define FH_APP_USING_FORMAT_1080P25_G0
+#define ISP_FORMAT_G0 FORMAT_1080P25
+#define VI_INPUT_WIDTH_G0 1920
+#define VI_INPUT_HEIGHT_G0 1080
+/*FH_APP_USING_FORMAT_720P30_G0 is not set */
+/*FH_APP_USING_FORMAT_720P25_G0 is not set */
+/*FH_APP_USING_FORMAT_320P30_G0 is not set */
+/*FH_APP_USING_FORMAT_320P25_G0 is not set */
+/*FH_APP_USING_FORMAT_320P240_G0 is not set */
+
+/*VPU Conifg */
+
+#define CH0_ENABLE_G0
+#define VPU_WIDTH_CH0_G0 1920
+#define VPU_HEIGHT_CH0_G0 1088
+#define VPU_BUF_NUM_CH0_G0 2
+#define VENC_ENABLE_G0_CH0
+#define CH0_BIT_RATE_G0 2048
+#define CH0_FRAME_COUNT_G0 30
+#define CH0_FRAME_TIME_G0 1
+/*FH_CH0_USING_SAMPLE_H264_G0 is not set */
+#define FH_CH0_USING_SAMPLE_H265_G0
+#define CH1_ENABLE_G0
+#define VPU_WIDTH_CH1_G0 720
+#define VPU_HEIGHT_CH1_G0 576
+#define VPU_BUF_NUM_CH1_G0 2
+/*VENC_ENABLE_G0_CH1 is not set */
+/*CH2_ENABLE_G0 is not set */
+/*VIDEO_GRP1 is not set */
+#define TIME_STAT_PTS
+#define SAVE_JPEG
+
+#endif

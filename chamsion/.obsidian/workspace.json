@@ -180,7 +180,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -196,6 +197,7 @@
   },
   "active": "8a9f8ef4887bc3b3",
   "lastOpenFiles": [
+    "附件/Pasted image 20260225201927.png",
     "daily/2026-02-24.md",
     "daily/2026-02-25.md",
     "附件/Pasted image 20260225102830.png",

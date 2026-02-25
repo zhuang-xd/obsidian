@@ -1,0 +1,57 @@
+#include "ringbuffer.h"
+
+#define RSH_READ32(addr)      (*((volatile unsigned int *)(addr)))
+#define RSH_WRITE32(addr,val) (*((volatile unsigned int *)(addr))) = (val)
+
+int ringbuffer_read(HRINGBUFFER h, char* buf, int bufsz, int* end)
+{
+    char chr;
+    int i;
+    int readbytes = 0;
+    unsigned int* pdata;
+    unsigned int  data;
+    unsigned int  rd;
+    unsigned int  wr;
+    unsigned int  size;
+    ringbuffer_t* ring = (ringbuffer_t*)h;
+
+    if (!h || !buf || !end)
+        return -1;
+
+    *end = 0;
+
+    rd   = RSH_READ32(&ring->rdpos);
+    wr   = RSH_READ32(&ring->wrpos);
+    size = RSH_READ32(&ring->size);
+
+    while ((bufsz - readbytes) >= 4 && rd != wr)
+    {
+        pdata = (unsigned int*)(&ring->buf[rd]); //just for remove warning by temporaly using pdata...
+        data = RSH_READ32(pdata);
+        rd += 4;
+        if (rd >= size)
+        {
+            rd -= size;
+        }
+
+        if (data == _END_FLAG_)
+        {
+            *end = 1;
+            continue;
+        }
+
+        for (i=0; i<4; i++)
+        {
+            chr = *((char*)(&data) + i);
+            if (!chr)
+                break;
+
+            buf[readbytes++] = chr;
+        }
+    }
+
+    /*update read pointer*/
+    RSH_WRITE32(&ring->rdpos, rd);
+
+    return readbytes;
+}

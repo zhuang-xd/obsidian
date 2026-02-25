@@ -1,0 +1,8 @@
+{
+    "enable_record":1,
+    "width":2560,
+    "height":1440,
+    "video_framerate": 25,
+    "audio_framerate": 16000,
+    "record_path":"/mnt/sd"
+}
