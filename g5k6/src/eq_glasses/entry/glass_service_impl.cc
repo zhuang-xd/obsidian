@@ -84,6 +84,18 @@ void get_file_name(char *buffer, uint8_t length, Caller filename)
       strftime(time_str, sizeof(time_str), "%Y-%m-%d-%H-%M-%S", timeinfo);
       LOGD("Generated file name time: %s", time_str);
   }
+
+  // 当系统时间未同步时(Unix 纪元 1970-01-01)，使用单调时钟生成唯一文件名
+  constexpr uint64_t kMinValidTimestamp = 86400;  // 1970-01-02 00:00:00
+  if (now_sec < kMinValidTimestamp) {
+      struct timespec mono_ts;
+      clock_gettime(CLOCK_MONOTONIC, &mono_ts);
+      snprintf(time_str, sizeof(time_str), "unsync_%llu",
+               (unsigned long long)(mono_ts.tv_sec * 1000ULL + mono_ts.tv_nsec / 1000000));
+      LOGW("System time not synced (epoch %llu), using fallback name: %s",
+           (unsigned long long)now_sec, time_str);
+  }
+
   if (filename == RECORD) {
     snprintf(buffer, length, "%s.mp4", time_str);
   } else if (filename == PHOTO) {
@@ -136,11 +148,11 @@ void GlassServiceImpl::OnTakePhoto() {
     LOGD("Taking photo...");
 
     if (!is_time_synced()) {
-        //if not sync time , try to sync time
+        // 若未同步时间则请求同步，等待更长时间以便手机端响应
         auto UartFrame = WifiHandler::MakeUartFrame(DEV_ID_MASTER, DEV_ID_APP, APP_CMD_SYNC_TIME, 0);
         uart_service_.Uart2Send(UartFrame->header_start, UARTFrame_SIZE(0));
         free(UartFrame);
-        UartHelper::SleepMilliSeconds(300);
+        UartHelper::SleepMilliSeconds(1500);  // 增加等待时间，提高同步成功率
     }
 
     set_record_state(true);
@@ -177,11 +189,11 @@ void GlassServiceImpl::OnTakePhoto() {
 void GlassServiceImpl::OnStartRecording() {
     LOGD("Starting recording...");
     if (!is_time_synced()) {
-        //if not sync time , try to sync time
+        // 若未同步时间则请求同步，等待更长时间以便手机端响应
         auto UartFrame = WifiHandler::MakeUartFrame(DEV_ID_MASTER, DEV_ID_APP, APP_CMD_SYNC_TIME, 0);
         uart_service_.Uart2Send(UartFrame->header_start, UARTFrame_SIZE(0));
         free(UartFrame);
-        UartHelper::SleepMilliSeconds(300);
+        UartHelper::SleepMilliSeconds(1500);  // 增加等待时间，提高同步成功率
     }
     if (get_record_state()) {
         LOG_W("Recording is already enabled.");
